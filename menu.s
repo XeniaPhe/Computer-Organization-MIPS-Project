@@ -26,6 +26,7 @@ main_menu:
 	sw $a0, 4($sp)
 	sw $ra, 0($sp)
 
+#print the welcome text before entering the main menu loop
 	li $v0, 4
 	la $a0, welcometext
 	syscall
@@ -39,10 +40,12 @@ error:
 	syscall
 
 main_loop:
+#print the menu
 	li $v0, 4
 	la $a0, menutext
 	syscall
 
+#take integer input from the user
 	li $v0, 5
 	syscall
 
