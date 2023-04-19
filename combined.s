@@ -343,13 +343,12 @@ char_loop:
 
 
 is_odd:
-    	# mid will contain only 1 character
+    	
     	addi $sp, $sp, -4 # reserve space on stack
     	sb $t4, ($sp) # push current character onto stack
     	la $t6, mid # load address of mid string
     	sb $t4, ($t6) # store current character in mid
 
-    	# decrement the character freq to make it even
     	addi $t4, $t4, -1 # decrement count[ch]
     	sb $t4, count($t3) # store updated count[ch]
 
