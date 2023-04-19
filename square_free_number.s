@@ -115,8 +115,6 @@ is_not_square_free:
     li $v0, 10   # terminate program
     syscall
     
-set_prime_counter_to_zero:
-    li $t0, 0 #set prime counter to zero if current prime can not divide the input
     
 increment_prime_number:
     addi $t1, $t1 , 1 # increment prime
