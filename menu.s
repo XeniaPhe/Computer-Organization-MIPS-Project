@@ -21,6 +21,7 @@ main:
 	syscall
 
 main_menu:
+#save the callee saved registers used in this procedure to the stack, (eventhough they're not used in main procedure)
 	addi $sp, $sp, -8
 	sw $a0, 4($sp)
 	sw $ra, 0($sp)
@@ -31,6 +32,7 @@ main_menu:
 
 	j main_loop
 
+#print error message and go back to main menu loop
 error:
 	li $v0, 4
 	la $a0, invalidtext
@@ -46,26 +48,35 @@ main_loop:
 
 	add $t0, $zero, $zero
 
+#print error message if the input is less than 1
 	slti $t0, $v0, 1
 	bne $t0, $zero, error
 
+#print error message if the input is greater than 5
 	slti $t0, $v0, 6
 	beq $t0, $zero, error
 
+#input == 1
 	slti $t0, $v0, 2
 	bne $t0, $zero, first
 
+#input == 2
 	slti $t0, $v0, 3
 	bne $t0, $zero, second
 
+#input == 3
 	slti $t0, $v0, 4
 	bne $t0, $zero, third
 
+#input == 4
 	slti $t0, $v0, 5
 	bne $t0, $zero, fourth
 
+#input == 5
 	j exit
 
+#We either had to handle the $ra register manually using the bne instructions not to branch here but to the 
+#individual procedures directly, or create 4 new labels for each procedure and use the jal instruction and we went with the simpler one which is the latter
 first:
 	jal proc_1
 	j main_loop
@@ -83,6 +94,7 @@ exit:
 	la $a0, exittext
 	syscall
 
+#restore the values of the callee saved registers from the stack
 	lw $ra, 0($sp)
 	lw $a0, 4($sp)
 	addi $sp, $sp, 8
